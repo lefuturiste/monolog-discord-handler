@@ -3,10 +3,9 @@
     "description": "A simple discord monolog for support Discord webhooks",
     "type": "library",
     "require": {
-        "monolog/monolog":"^1.23",
-        "guzzlehttp/guzzle":"^6.3"
+        "monolog/monolog":"~1.23",
+        "guzzlehttp/guzzle":"~6.3"
     },
-    "minimum-stability": "dev",
     "license": "MIT",
     "authors": [
         {
