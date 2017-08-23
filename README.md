@@ -33,7 +33,7 @@ $log = new Monolog\Logger('your name');
 
 $log->pushHandler(new App\MonologDiscordHandler([
 'Discord Webhook url'
-], 'DEBUG'));
+], 'name', 'subname', 'DEBUG'));
 
 ```
 
