@@ -25,7 +25,7 @@ class DiscordHandler extends AbstractProcessingHandler
 	public function __construct($webhooks, $name, $subname = '', $level = Logger::DEBUG, $bubble = true)
 	{
 		$this->name = $name;
-		$this->subname = $subname
+		$this->subname = $subname;
 		$this->guzzle = new \GuzzleHttp\Client();
 		$this->webhooks = $webhooks;
 		parent::__construct($level, $bubble);

@@ -31,7 +31,7 @@ require 'vendor/autoload.php';
 
 $log = new Monolog\Logger('your name');
 
-$log->pushHandler(new App\MonologDiscordHandler([
+$log->pushHandler(new DiscordHandler\DiscordHandler([
 'Discord Webhook url'
 ], 'name', 'subname', 'DEBUG'));
 
@@ -46,7 +46,7 @@ require 'vendor/autoload.php';
 
 $log = new Monolog\Logger('your name');
 
-$log->pushHandler(new App\MonologDiscordHandler([
+$log->pushHandler(new DiscordHandler\DiscordHandler([
 'Discord Webhook url 1',
 'Discord Webhook url 2',
 ], 'name', 'subname', 'DEBUG'));
