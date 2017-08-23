@@ -1,0 +1,15 @@
+{
+    "name": "lefuturiste/monolog-discord-handler",
+    "description": "A simple discord monolog for support Discord webhooks",
+    "type": "library",
+    "require": {
+        "monolog/monolog": "^1.23"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthieu Bessat",
+            "email": "mail@matthieubessat.fr"
+        }
+    ]
+}
