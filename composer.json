@@ -12,5 +12,10 @@
             "name": "Matthieu Bessat",
             "email": "mail@matthieubessat.fr"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "DiscordHandler\\": "src"
+        }
+    }
 }
