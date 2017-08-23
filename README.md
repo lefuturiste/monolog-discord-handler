@@ -49,6 +49,6 @@ $log = new Monolog\Logger('your name');
 $log->pushHandler(new App\MonologDiscordHandler([
 'Discord Webhook url 1',
 'Discord Webhook url 2',
-], 'DEBUG'));
+], 'name', 'subname', 'DEBUG'));
 
 ```
