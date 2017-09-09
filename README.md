@@ -1,6 +1,6 @@
 # monolog-discord-handler
 
-A simple discord handler for support Discord webhooks
+A simple monolog handler for support Discord webhooks
 
 -------------------------------------------------
 
