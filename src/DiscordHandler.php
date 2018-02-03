@@ -18,7 +18,7 @@ class DiscordHandler extends AbstractProcessingHandler
 	/**
 	 * MonologDiscordHandler constructor.
 	 * @param \GuzzleHttp\Client $guzzle
-	 * @param bool $webhooks
+	 * @param array $webhooks
 	 * @param int $level
 	 * @param bool $bubble
 	 */
