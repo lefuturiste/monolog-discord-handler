@@ -15,7 +15,7 @@ A simple monolog handler for support Discord webhooks
 
 Easy install via composer. Still no idea what composer is? Inform yourself [here](http://getcomposer.org).
 
-```composer require lefuturiste/monolog-discord-handler```
+```composer require den1008/monolog-discord-handler```
 
 -------------------------------------------------
 
@@ -31,9 +31,7 @@ require 'vendor/autoload.php';
 
 $log = new Monolog\Logger('your name');
 
-$log->pushHandler(new DiscordHandler\DiscordHandler([
-'Discord Webhook url'
-], 'name', 'subname', 'DEBUG'));
+$log->pushHandler(new DiscordHandler\DiscordHandler('Discord Webhook url', 'name', 'subname', 'DEBUG'));
 
 ```
 
