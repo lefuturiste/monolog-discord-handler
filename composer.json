@@ -1,5 +1,5 @@
 {
-  "name": "lefuturiste/monolog-discord-handler",
+  "name": "den1008/monolog-discord-handler",
   "description": "A simple monolog handler for support Discord webhooks",
   "version": "0.1.3",
   "minimum-stability": "stable",
