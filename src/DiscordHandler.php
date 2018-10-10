@@ -32,7 +32,7 @@ class DiscordHandler extends AbstractProcessingHandler
      * @param int $level
      * @param bool $bubble
      */
-    public function __construct($webHooks, $name, $multiMsg = false, $subName = '', $level = Logger::DEBUG, $bubble = true)
+    public function __construct($webHooks, $name, $subName = '', $level = Logger::DEBUG, $bubble = true, $multiMsg = false)
     {
         $this->name = $name;
         $this->subName = $subName;
