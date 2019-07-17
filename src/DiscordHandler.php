@@ -2,81 +2,117 @@
 
 namespace DiscordHandler;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use \Monolog\Logger;
 use \Monolog\Handler\AbstractProcessingHandler;
 
 class DiscordHandler extends AbstractProcessingHandler
 {
-    /** @var \GuzzleHttp\Client */
-    protected $guzzle;
-
-    protected $name;
-    protected $subName;
-
-    /**
-     * Флаг мульти-сообщений (Если true, то при превышении максимальной длины одного сообщения, будет отправлено несколько)
-     * @var bool
-     */
-    protected $multiMsg;
-
-    /** @var array */
-    protected $webHooks;
+    /** @var Config */
+    protected $config;
 
     /**
      * DiscordHandler constructor.
      *
-     * @param $webHooks
-     * @param $name
-     * @param bool $multiMsg
+     * @param array|string $webHooks
+     * @param string $name
      * @param string $subName
      * @param int $level
      * @param bool $bubble
      */
-    public function __construct($webHooks, $name, $subName = '', $level = Logger::DEBUG, $bubble = true, $multiMsg = false)
+    public function __construct($webHooks, $name, $subName = '', $level = Logger::DEBUG, $bubble = true)
     {
-        $this->name = $name;
-        $this->subName = $subName;
-        $this->guzzle = new \GuzzleHttp\Client();
-        $this->webHooks = (array)$webHooks;
-        $this->multiMsg = $multiMsg;
         parent::__construct($level, $bubble);
+
+        $this->config = (new Config())
+            ->setClient(new Client())
+            ->setName($name)
+            ->setSubName($subName)
+            ->setWebHooks($webHooks);
+    }
+
+    /**
+     * @return Config
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param Config $config
+     *
+     * @return DiscordHandler
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return $this;
     }
 
     /**
      * @param array $record
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @throws GuzzleException
      */
     protected function write(array $record)
     {
-        $content = '[**' . $record['datetime']->format('Y-m-d H:i:s') . ']** ' . $this->name . '.' . $this->subName . '.__' . $record['level_name'] . '__: ' . $record['message'];
+        $content = strtr(
+            $this->config->getTemplate(),
+            [
+                '{datetime}' => $record['datetime']->format($this->config->getDatetimeFormat()),
+                '{name}' => $this->config->getName(),
+                '{subName}' => $this->config->getSubName(),
+                '{levelName}' => $record['level_name'],
+                '{message}' => $record['message'],
+            ]
+        );
 
-        foreach ($this->webHooks as $webHook) {
-            if ($this->multiMsg) {
-                foreach (str_split($content, 2000) as $frame) {
-                    $this->send($webHook, $frame);
-                }
-            } else {
-                if (strlen($content) > 2000) {
-                    $truncated = strlen($content) - 1950;
-                    $content = substr($content, 0, 1950) . " [...truncated $truncated characters]";
-                }
-                $this->send($webHook, $content);
+        $parts = $this->splitMessage($content);
+        foreach ($this->config->getWebHooks() as $webHook) {
+            foreach ($parts as $part) {
+                $this->send($webHook, $part);
             }
         }
     }
 
     /**
-     * @param $webHook
-     * @param $content
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param string $content
+     *
+     * @return string[]
      */
-    protected function send($webHook, $content){
-        $this->guzzle->request(
-            'POST', $webHook, [
-                'form_params' => [
-                    'content' => $content
-                ]
-            ]
-        );
+    protected function splitMessage($content)
+    {
+        $maxMessageLength = $this->config->getMaxMessageLength();
+
+        if (!$maxMessageLength) {
+            return [$content];
+        }
+
+        if ($this->config->isMultiMsg()) {
+            return str_split($content, $maxMessageLength);
+        }
+
+        if (strlen($content) > $maxMessageLength) {
+            $truncated = strlen($content) - $maxMessageLength + 30;
+            $result = substr($content, 0, $maxMessageLength - 30) . " [...truncated $truncated characters]";
+
+            return [$result];
+        }
+
+        return [$content];
+    }
+
+    /**
+     * @param string $webHook
+     * @param string $content
+     *
+     * @throws GuzzleException
+     */
+    protected function send($webHook, $content)
+    {
+        $this->config->getClient()->request('POST', $webHook, ['form_params' => ['content' => $content]]);
     }
 }

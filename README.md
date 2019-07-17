@@ -50,3 +50,29 @@ $log->pushHandler(new DiscordHandler\DiscordHandler([
 ], 'name', 'subname', 'DEBUG'));
 
 ```
+
+### Use configuration
+ 
+```php
+<?php
+require 'vendor/autoload.php';
+
+$log = new Monolog\Logger('your name');
+
+$handler = new DiscordHandler\DiscordHandler('Webhook url','name', 'subname', 'DEBUG');
+
+$handler->getConfig()
+    ->setMultiMsg(true)
+    ->setMaxMessageLength(2000) // at least 50 characters
+    ->setDatetimeFormat('Y/m/d H:i')
+    ->setTemplate("{datetime} {name}: {message}");
+
+// or you can create another Config instance and replace it:
+$otherConfig = new DiscordHandler\Config();
+$otherConfig->setWebHooks(['Other Hook Url 1', 'Other Hook Url 2']);
+
+$handler->setConfig($otherConfig);
+
+$log->pushHandler($handler);
+
+```

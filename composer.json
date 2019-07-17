@@ -1,7 +1,6 @@
 {
-  "name": "den1008/monolog-discord-handler",
+  "name": "lefuturiste/monolog-discord-handler",
   "description": "A simple monolog handler for support Discord webhooks",
-  "version": "1.0.0",
   "type": "library",
   "require": {
     "monolog/monolog": "*",
