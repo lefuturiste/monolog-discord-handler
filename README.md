@@ -15,7 +15,7 @@ A simple monolog handler for support Discord webhooks
 
 Easy install via composer. Still no idea what composer is? Inform yourself [here](http://getcomposer.org).
 
-```composer require den1008/monolog-discord-handler```
+```composer require lefuturiste/monolog-discord-handler```
 
 -------------------------------------------------
 
