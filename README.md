@@ -21,7 +21,7 @@ Easy install via composer. Still no idea what composer is? Inform yourself [here
 
 ## 2. Usage
 
-Push this handler to your monlog instance:
+Push this handler to your Monolog instance:
 
 ### Only one webhooks url
 
