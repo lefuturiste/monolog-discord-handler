@@ -1,4 +1,10 @@
-# monolog-discord-handler
+# Monolog discord handler
+
+[![Latest Stable Version](https://poser.pugx.org/lefuturiste/monolog-discord-handler/v/stable)](https://packagist.org/packages/lefuturiste/monolog-discord-handler)
+[![Total Downloads](https://poser.pugx.org/lefuturiste/monolog-discord-handler/downloads)](https://packagist.org/packages/lefuturiste/monolog-discord-handler)
+[![License](https://poser.pugx.org/lefuturiste/monolog-discord-handler/license)](https://packagist.org/packages/lefuturiste/monolog-discord-handler)
+[![Monthly Downloads](https://poser.pugx.org/lefuturiste/monolog-discord-handler/d/monthly)](https://packagist.org/packages/lefuturiste/monolog-discord-handler)
+
 
 A simple monolog handler for support Discord webhooks
 
