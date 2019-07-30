@@ -1,21 +1,21 @@
 {
-    "name": "lefuturiste/monolog-discord-handler",
-    "description": "A simple monolog handler for support Discord webhooks",
-    "type": "library",
-    "require": {
-        "monolog/monolog":"*",
-        "guzzlehttp/guzzle":"*"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Matthieu Bessat",
-            "email": "mail@matthieubessat.fr"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "DiscordHandler\\": "src"
-        }
+  "name": "lefuturiste/monolog-discord-handler",
+  "description": "A simple monolog handler for support Discord webhooks",
+  "type": "library",
+  "require": {
+    "monolog/monolog": "*",
+    "guzzlehttp/guzzle": "*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Matthieu Bessat",
+      "email": "mail@matthieubessat.fr"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DiscordHandler\\": "src"
+    }
+  }
 }
