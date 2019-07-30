@@ -4,7 +4,7 @@ A simple monolog handler for support Discord webhooks
 
 -------------------------------------------------
 
-### Dependecies
+### Dependencies
 
 - PHP >= 5.3
 - Monolog >= 1.3
