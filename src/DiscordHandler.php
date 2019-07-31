@@ -97,7 +97,11 @@ class DiscordHandler extends AbstractProcessingHandler
                     '{message}' => $record['message'],
                 ]
             );
-            $parts = $this->splitMessage($content);
+            $parts = array_map(function ($message) {
+                return [
+                    'content' => $message
+                ];
+            }, $this->splitMessage($content));
         }
 
         foreach ($this->config->getWebHooks() as $webHook) {
