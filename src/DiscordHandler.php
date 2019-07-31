@@ -13,6 +13,22 @@ class DiscordHandler extends AbstractProcessingHandler
     protected $config;
 
     /**
+     * Colors for a given log level.
+     *
+     * @var array
+     */
+    protected $levelColors = [
+        Logger::DEBUG => 10395294,
+        Logger::INFO => 5025616,
+        Logger::NOTICE => 6323595,
+        Logger::WARNING => 16771899,
+        Logger::ERROR => 16007990,
+        Logger::CRITICAL => 16007990,
+        Logger::ALERT => 16007990,
+        Logger::EMERGENCY => 16007990,
+    ];
+
+    /**
      * DiscordHandler constructor.
      *
      * @param array|string $webHooks
@@ -59,18 +75,31 @@ class DiscordHandler extends AbstractProcessingHandler
      */
     protected function write(array $record)
     {
-        $content = strtr(
-            $this->config->getTemplate(),
-            [
-                '{datetime}' => $record['datetime']->format($this->config->getDatetimeFormat()),
-                '{name}' => $this->config->getName(),
-                '{subName}' => $this->config->getSubName(),
-                '{levelName}' => $record['level_name'],
-                '{message}' => $record['message'],
-            ]
-        );
+        if ($this->config->isEmbedMode()) {
+            $parts = [[
+                'embeds' => [
+                    [
+                        'title' => $record['level_name'],
+                        'description' => $this->splitMessage($record['message'])[0],
+                        'timestamp' => $record['datetime']->format($this->config->getDatetimeFormat()),
+                        'color' => $this->levelColors[$record['level']],
+                    ],
+                ]
+            ]];
+        } else {
+            $content = strtr(
+                $this->config->getTemplate(),
+                [
+                    '{datetime}' => $record['datetime']->format($this->config->getDatetimeFormat()),
+                    '{name}' => $this->config->getName(),
+                    '{subName}' => $this->config->getSubName(),
+                    '{levelName}' => $record['level_name'],
+                    '{message}' => $record['message'],
+                ]
+            );
+            $parts = $this->splitMessage($content);
+        }
 
-        $parts = $this->splitMessage($content);
         foreach ($this->config->getWebHooks() as $webHook) {
             foreach ($parts as $part) {
                 $this->send($webHook, $part);
@@ -107,12 +136,14 @@ class DiscordHandler extends AbstractProcessingHandler
 
     /**
      * @param string $webHook
-     * @param string $content
+     * @param string $json
      *
      * @throws GuzzleException
      */
-    protected function send($webHook, $content)
+    protected function send($webHook, $json)
     {
-        $this->config->getClient()->request('POST', $webHook, ['form_params' => ['content' => $content]]);
+        $this->config->getClient()->request('POST', $webHook, [
+            'json' => $json
+        ]);
     }
 }

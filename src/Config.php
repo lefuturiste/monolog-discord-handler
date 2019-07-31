@@ -31,6 +31,9 @@ class Config
     /** @var string */
     protected $datetimeFormat = 'Y-m-d H:i:s';
 
+    /** @var bool */
+    private $embedMode;
+
     /**
      * Http client, performing interaction with Discord API.
      *
@@ -256,5 +259,19 @@ class Config
     {
         $this->datetimeFormat = $datetimeFormat;
         return $this;
+    }
+
+    public function setEmbedMode($value = true)
+    {
+        $this->embedMode = $value;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmbedMode(): bool
+    {
+        return $this->embedMode;
     }
 }
