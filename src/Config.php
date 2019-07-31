@@ -32,7 +32,7 @@ class Config
     protected $datetimeFormat = 'Y-m-d H:i:s';
 
     /** @var bool */
-    private $embedMode;
+    private $embedMode = false;
 
     /**
      * Http client, performing interaction with Discord API.
