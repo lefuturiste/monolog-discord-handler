@@ -1,10 +1,17 @@
 <?php
 require '../vendor/autoload.php';
 
-$log = new Monolog\Logger('your name');
+$log = new Monolog\Logger('name');
 
 $log->pushHandler(new DiscordHandler\DiscordHandler([
-'https://discordapp.com/api/webhooks/349907239303249930/QDPTQxUjaiD3wTrGH14eYa2jyVmdmxG1UNjaOAgP_lmqMEV_-KSq5kt7TG9A5A8GEO10',
+    'https://discordapp.com/api/webhooks/xxx/yyy',
 ], 'name', 'subname', 'DEBUG'));
 
+$log->debug('test');
 $log->info('test');
+$log->notice('test');
+$log->warning('test');
+$log->error('test');
+$log->critical('test');
+$log->alert('test');
+$log->emergency('test');
