@@ -83,7 +83,7 @@ class DiscordHandler extends AbstractProcessingHandler
                         'description' => $this->splitMessage($record['message'])[0],
                         'timestamp' => $record['datetime']->format($this->config->getDatetimeFormat()),
                         'color' => $this->levelColors[$record['level']],
-                    ],
+                    ]
                 ]
             ]];
         } else {
