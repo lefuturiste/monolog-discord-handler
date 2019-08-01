@@ -2,20 +2,50 @@
   "name": "lefuturiste/monolog-discord-handler",
   "description": "A simple monolog handler for support Discord webhooks",
   "type": "library",
+  "keywords": [
+    "log",
+    "logging",
+    "psr3",
+    "webhook",
+    "discord",
+    "integration",
+    "monolog"
+  ],
+  "readme": "README.md",
+  "license": "MIT",
+  "homepage": "https://github.com/lefuturiste/monolog-discord-handler",
+  "authors": [
+    {
+      "name": "Matthieu Bessat",
+      "email": "mail@matthieubessat.fr",
+      "homepage": "https://matthieubessat.fr"
+    }
+  ],
+  "support": {
+    "email": "mail@matthieubessat.fr",
+    "issues": "https://github.com/lefuturiste/monolog-discord-handler/issues",
+    "source": "https://github.com/lefuturiste/monolog-discord-handler",
+    "docs": "https://github.com/lefuturiste/monolog-discord-handler/blob/master/README.md"  
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit tests"
+  },
   "require": {
     "monolog/monolog": "*",
     "guzzlehttp/guzzle": "*"
   },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Matthieu Bessat",
-      "email": "mail@matthieubessat.fr"
-    }
-  ],
+  "require-dev": {
+    "phpunit/phpunit": "^8.2",
+    "vlucas/phpdotenv": "^3.4"
+  },
   "autoload": {
     "psr-4": {
       "DiscordHandler\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DiscordHandler\\Tests\\": "tests"
     }
   }
 }
