@@ -12,8 +12,10 @@ A simple monolog handler for support Discord webhooks
 
 ### Dependencies
 
-- PHP >= 5.3
+- PHP >= 7.2
 - Monolog >= 1.3
+
+**If you want to use this lib with older version of PHP than 7.2, install versions prior to 0.3** 
 
 -------------------------------------------------
 
