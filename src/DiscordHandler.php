@@ -72,8 +72,9 @@ class DiscordHandler extends AbstractProcessingHandler
      * @param array $record
      *
      * @throws GuzzleException
+     * @return void
      */
-    protected function write(array $record)
+    protected function write(array $record): void
     {
         if ($this->config->isEmbedMode()) {
             $parts = [[
