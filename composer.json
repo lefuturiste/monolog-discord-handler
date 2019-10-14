@@ -31,7 +31,7 @@
     "test": "vendor/bin/phpunit tests"
   },
   "require": {
-    "php": "7.2",
+    "php": ">=7.2",
     "monolog/monolog": "*",
     "guzzlehttp/guzzle": "*"
   },
