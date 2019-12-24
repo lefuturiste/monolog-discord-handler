@@ -17,12 +17,12 @@
   "authors": [
     {
       "name": "Matthieu Bessat",
-      "email": "mail@matthieubessat.fr",
-      "homepage": "https://matthieubessat.fr"
+      "email": "contact@lefuturiste.fr",
+      "homepage": "https://lefuturiste.fr"
     }
   ],
   "support": {
-    "email": "mail@matthieubessat.fr",
+    "email": "contact@lefuturiste.fr",
     "issues": "https://github.com/lefuturiste/monolog-discord-handler/issues",
     "source": "https://github.com/lefuturiste/monolog-discord-handler",
     "docs": "https://github.com/lefuturiste/monolog-discord-handler/blob/master/README.md"  
