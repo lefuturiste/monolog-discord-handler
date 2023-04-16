@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use \Monolog\Logger;
 use \Monolog\Handler\AbstractProcessingHandler;
+use Monolog\LogRecord;
 
 class DiscordHandler extends AbstractProcessingHandler
 {
@@ -74,7 +75,7 @@ class DiscordHandler extends AbstractProcessingHandler
      * @throws GuzzleException
      * @return void
      */
-    protected function write(array $record): void
+    protected function write(LogRecord $record): void
     {
         if ($this->config->isEmbedMode()) {
             $parts = [[
