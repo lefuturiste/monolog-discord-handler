@@ -94,7 +94,8 @@ To run the example, you need:
 
 - `composer install`
 - `cp .env.example .env`
-- `composer test`, be aware: tests are a little specials, they are requiring env vars
+- ~~`composer test`~~, for now we don't have unit tests.
+- run `vendor/bin/phpstan analyse src -l 6` to run the static analyzer.
 
 #### TODO
 

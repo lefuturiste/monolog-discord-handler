@@ -16,7 +16,7 @@ class DiscordHandler extends AbstractProcessingHandler
     /**
      * DiscordHandler constructor.
      *
-     * @param array|string $webHooks
+     * @param string[]|string $webHook
      * @param string $name
      * @param string $subName
      * @param Level $level
@@ -59,7 +59,7 @@ class DiscordHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param array $record
+     * @param LogRecord $record
      *
      * @throws GuzzleException
      * @return void
@@ -131,10 +131,11 @@ class DiscordHandler extends AbstractProcessingHandler
 
     /**
      * @param string $webHook
-     * @param string $json
+     * @param array $json
      *
      * @throws GuzzleException
      */
+    /** @phpstan-ignore-next-line */
     protected function send(string $webHook, array $json): void
     {
         $this->config->getClient()->request('POST', $webHook, [

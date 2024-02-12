@@ -17,6 +17,7 @@ class Config
 
     protected int $maxMessageLength = 255;
 
+    /** @var string[] **/
     protected array $webHooks = [];
 
     protected string $template = "**[{datetime}]** {name}.{subName}.__{levelName}__: {message}";
@@ -33,10 +34,6 @@ class Config
      */
     public function getClient(): Client
     {
-        if (!$this->client) {
-            $this->client = new Client();
-        }
-
         return $this->client;
     }
 
@@ -122,7 +119,7 @@ class Config
      * @see isMultiMsg()
      * @see setMaxMessageLength()
      */
-    public function setMultiMsg(int $multiMsg): self
+    public function setMultiMsg(bool $multiMsg): self
     {
         $this->multiMsg = $multiMsg;
 
@@ -136,7 +133,7 @@ class Config
      *
      * @see getMaxMessageLength()
      */
-    public function setMaxMessageLength(int $maxMessageLength): self
+    public function setMaxMessageLength(int|null $maxMessageLength): self
     {
         if (!is_null($maxMessageLength)) {
             if (!is_int($maxMessageLength)) {
@@ -182,7 +179,7 @@ class Config
     }
 
     /**
-     * @param string|string[] $webHooks
+     * @param string[] $webHooks
      *
      * @return Config
      *
@@ -190,7 +187,7 @@ class Config
      */
     public function setWebHooks(array $webHooks): self
     {
-        $this->webHooks = (array)$webHooks;
+        $this->webHooks = $webHooks;
 
         return $this;
     }
