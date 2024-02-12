@@ -4,7 +4,7 @@ require '../vendor/autoload.php';
 $log = new Monolog\Logger('name');
 
 $log->pushHandler(new DiscordHandler\DiscordHandler([
-    'https://discordapp.com/api/webhooks/xxx/yyy',
+    getenv("DISCORD_WEBHOOK_URL"),
 ], 'name', 'subname', 'DEBUG'));
 
 $log->debug('test');
