@@ -1,13 +1,16 @@
 <?php
+
+use Monolog\Level;
+
 require '../vendor/autoload.php';
 
 $log = new Monolog\Logger('name');
 
 $handler = new DiscordHandler\DiscordHandler(
-    getenv("DISCORD_WEBHOOK_URL"),
+    [getenv("DISCORD_WEBHOOK_URL")],
     'name',
     'subname',
-    'DEBUG'
+    Level::Debug
 );
 
 $handler->getConfig()

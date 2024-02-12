@@ -4,8 +4,8 @@ namespace DiscordHandler;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use \Monolog\Logger;
-use \Monolog\Handler\AbstractProcessingHandler;
+use Monolog\Level;
+use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\LogRecord;
 
 class DiscordHandler extends AbstractProcessingHandler
@@ -14,45 +14,34 @@ class DiscordHandler extends AbstractProcessingHandler
     protected $config;
 
     /**
-     * Colors for a given log level.
-     *
-     * @var array
-     */
-    protected $levelColors = [
-        Logger::DEBUG => 10395294,
-        Logger::INFO => 5025616,
-        Logger::NOTICE => 6323595,
-        Logger::WARNING => 16771899,
-        Logger::ERROR => 16007990,
-        Logger::CRITICAL => 16007990,
-        Logger::ALERT => 16007990,
-        Logger::EMERGENCY => 16007990,
-    ];
-
-    /**
      * DiscordHandler constructor.
      *
      * @param array|string $webHooks
      * @param string $name
      * @param string $subName
-     * @param int $level
+     * @param Level $level
      * @param bool $bubble
      */
-    public function __construct($webHooks, $name = '', $subName = '', $level = Logger::DEBUG, $bubble = true)
-    {
+    public function __construct(
+        array|string $webHook = [],
+        string $name = '',
+        string $subName = '',
+        Level $level = Level::Debug,
+        bool $bubble = true
+    ) {
         parent::__construct($level, $bubble);
 
         $this->config = (new Config())
             ->setClient(new Client())
             ->setName($name)
             ->setSubName($subName)
-            ->setWebHooks($webHooks);
+            ->setWebHooks(is_string($webHook) ? [$webHook]: $webHook);
     }
 
     /**
      * @return Config
      */
-    public function getConfig()
+    public function getConfig(): Config
     {
         return $this->config;
     }
@@ -62,7 +51,7 @@ class DiscordHandler extends AbstractProcessingHandler
      *
      * @return DiscordHandler
      */
-    public function setConfig($config)
+    public function setConfig(Config $config): self
     {
         $this->config = $config;
 
@@ -81,10 +70,10 @@ class DiscordHandler extends AbstractProcessingHandler
             $parts = [[
                 'embeds' => [
                     [
-                        'title' => $record['level_name'],
-                        'description' => $this->splitMessage($record['message'])[0],
-                        'timestamp' => $record['datetime']->format($this->config->getDatetimeFormat()),
-                        'color' => $this->levelColors[$record['level']],
+                        'title' => $record->level->getName(),
+                        'description' => $this->splitMessage($record->message)[0],
+                        'timestamp' => $record->datetime->format($this->config->getDatetimeFormat()),
+                        'color' => $this->getColorForLevel($record->level),
                     ]
                 ]
             ]];
@@ -95,8 +84,8 @@ class DiscordHandler extends AbstractProcessingHandler
                     '{datetime}' => $record['datetime']->format($this->config->getDatetimeFormat()),
                     '{name}' => $this->config->getName(),
                     '{subName}' => $this->config->getSubName(),
-                    '{levelName}' => $record['level_name'],
-                    '{message}' => $record['message'],
+                    '{levelName}' => $record->level->getName(),
+                    '{message}' => $record->message,
                 ]
             );
             $parts = array_map(function ($message) {
@@ -118,7 +107,7 @@ class DiscordHandler extends AbstractProcessingHandler
      *
      * @return string[]
      */
-    protected function splitMessage($content)
+    protected function splitMessage(string $content): array
     {
         $maxMessageLength = $this->config->getMaxMessageLength();
 
@@ -146,10 +135,30 @@ class DiscordHandler extends AbstractProcessingHandler
      *
      * @throws GuzzleException
      */
-    protected function send($webHook, $json)
+    protected function send(string $webHook, array $json): void
     {
         $this->config->getClient()->request('POST', $webHook, [
             'json' => $json
         ]);
     }
+
+    /**
+     * Return the embed colors for a given log level.
+     *
+     * @param Level $level
+     * @return int
+     */
+    protected function getColorForLevel(Level $level): int {
+        return match ($level) {
+            Level::Debug => 10395294,
+            Level::Info => 5025616,
+            Level::Notice => 6323595,
+            Level::Warning => 16771899,
+            Level::Error => 16007990,
+            Level::Critical => 16007990,
+            Level::Alert => 16007990,
+            Level::Emergency => 16007990,
+        };
+    }
+
 }

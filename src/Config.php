@@ -7,29 +7,21 @@ use InvalidArgumentException;
 
 class Config
 {
-    /** @var Client */
-    protected $client;
+    protected Client $client;
 
-    /** @var string */
-    protected $name;
+    protected string $name;
 
-    /** @var string */
-    protected $subName;
+    protected string $subName;
 
-    /** @var bool */
-    protected $multiMsg = false;
+    protected bool $multiMsg = false;
 
-    /** @var int|null */
-    protected $maxMessageLength;
+    protected int $maxMessageLength = 255;
 
-    /** @var string[] */
-    protected $webHooks = [];
+    protected array $webHooks = [];
 
-    /** @var string */
-    protected $template = "**[{datetime}]** {name}.{subName}.__{levelName}__: {message}";
+    protected string $template = "**[{datetime}]** {name}.{subName}.__{levelName}__: {message}";
 
-    /** @var string */
-    protected $datetimeFormat = 'Y-m-d H:i:s';
+    protected string $datetimeFormat = "Y-m-d H:i:s";
 
     /** @var bool */
     private $embedMode = false;
@@ -39,7 +31,7 @@ class Config
      *
      * @return Client
      */
-    public function getClient()
+    public function getClient(): Client
     {
         if (!$this->client) {
             $this->client = new Client();
@@ -55,7 +47,7 @@ class Config
      *
      * @see getClient()
      */
-    public function setClient($client)
+    public function setClient(Client $client): self
     {
         $this->client = $client;
 
@@ -65,7 +57,7 @@ class Config
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -77,7 +69,7 @@ class Config
      *
      * @see getName()
      */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -89,7 +81,7 @@ class Config
      *
      * @see getSubName()
      */
-    public function getSubName()
+    public function getSubName(): string
     {
         return $this->subName;
     }
@@ -101,7 +93,7 @@ class Config
      *
      * @see getSubName()
      */
-    public function setSubName($subName)
+    public function setSubName(string $subName): self
     {
         $this->subName = $subName;
 
@@ -117,7 +109,7 @@ class Config
      *
      * @see getMaxMessageLength()
      */
-    public function isMultiMsg()
+    public function isMultiMsg(): bool
     {
         return $this->multiMsg;
     }
@@ -130,7 +122,7 @@ class Config
      * @see isMultiMsg()
      * @see setMaxMessageLength()
      */
-    public function setMultiMsg($multiMsg)
+    public function setMultiMsg(int $multiMsg): self
     {
         $this->multiMsg = $multiMsg;
 
@@ -144,7 +136,7 @@ class Config
      *
      * @see getMaxMessageLength()
      */
-    public function setMaxMessageLength($maxMessageLength)
+    public function setMaxMessageLength(int $maxMessageLength): self
     {
         if (!is_null($maxMessageLength)) {
             if (!is_int($maxMessageLength)) {
@@ -174,7 +166,7 @@ class Config
      *
      * @see isMultiMsg()
      */
-    public function getMaxMessageLength()
+    public function getMaxMessageLength(): int
     {
         return $this->maxMessageLength;
     }
@@ -184,7 +176,7 @@ class Config
      *
      * @return string[]
      */
-    public function getWebHooks()
+    public function getWebHooks(): array
     {
         return $this->webHooks;
     }
@@ -196,7 +188,7 @@ class Config
      *
      * @see getWebHooks()
      */
-    public function setWebHooks($webHooks)
+    public function setWebHooks(array $webHooks): self
     {
         $this->webHooks = (array)$webHooks;
 
@@ -215,7 +207,7 @@ class Config
      *
      * @return string
      */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }
@@ -227,7 +219,7 @@ class Config
      *
      * @see getTemplate()
      */
-    public function setTemplate($template)
+    public function setTemplate(string $template): self
     {
         $this->template = $template;
 
@@ -243,7 +235,7 @@ class Config
      * @see date()
      * @see getTemplate()
      */
-    public function getDatetimeFormat()
+    public function getDatetimeFormat(): string
     {
         return $this->datetimeFormat;
     }
@@ -255,13 +247,18 @@ class Config
      *
      * @see getDatetimeFormat()
      */
-    public function setDatetimeFormat($datetimeFormat)
+    public function setDatetimeFormat($datetimeFormat): self
     {
         $this->datetimeFormat = $datetimeFormat;
         return $this;
     }
 
-    public function setEmbedMode($value = true)
+    /**
+     * Enable or disable embed mode
+     *
+     * @param bool $value
+     */
+    public function setEmbedMode(bool $value = true): self
     {
         $this->embedMode = $value;
         return $this;
